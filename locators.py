@@ -94,3 +94,8 @@ class ForgotPassword:
 
     # ссылка Войти
     login_link = (By.LINK_TEXT, 'Войти')
+
+# Служебные локаторы
+class Common:
+    # поиск родителя
+    parent = (By.XPATH, "..")

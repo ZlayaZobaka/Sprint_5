@@ -1,12 +1,13 @@
 import pytest
 import locators
+from config import Config
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.wait import WebDriverWait
 
 
 class TestLogin:
     # Вход по кнопке «Войти в аккаунт» на главной,
-    def test_login_from_main_page_logged_on(self, driver, url, registered_user):
+    def test_login_from_main_page_logged_on(self, driver, registered_user):
         # переходим с главной страницы на форму логина
         driver.find_element(*locators.MainPage.enter_to_profile_btn).click()
 
@@ -18,10 +19,10 @@ class TestLogin:
             ec.element_to_be_clickable(locators.MainPage.make_an_order_btn))
 
         # проверяем, что перешли на url главной страницы
-        assert driver.current_url == url
+        assert driver.current_url == Config.BASE_URL
 
     # Вход через кнопку «Личный кабинет»,
-    def test_login_from_profile_btn_logged_on(self, driver, url, registered_user):
+    def test_login_from_profile_btn_logged_on(self, driver, registered_user):
         # переходим с главной страницы на форму логина по кнопке Личный кабинет
         driver.find_element(*locators.MainPage.header_profile_btn).click()
 
@@ -33,10 +34,10 @@ class TestLogin:
             ec.element_to_be_clickable(locators.MainPage.make_an_order_btn))
 
         # проверяем, что перешли на url главной страницы
-        assert driver.current_url == url
+        assert driver.current_url == Config.BASE_URL
 
     # Вход через кнопку в форме регистрации,
-    def test_login_from_register_form_logged_on(self, driver, url, registered_user):
+    def test_login_from_register_form_logged_on(self, driver, registered_user):
         # по ссылкам переходим по страницам: главная > логин > регистрация > логин
         driver.find_element(*locators.MainPage.header_profile_btn).click()
         driver.find_element(*locators.Login.register_link).click()
@@ -50,10 +51,10 @@ class TestLogin:
             ec.element_to_be_clickable(locators.MainPage.make_an_order_btn))
 
         # проверяем, что перешли на url главной страницы
-        assert driver.current_url == url
+        assert driver.current_url == Config.BASE_URL
 
     # Вход через кнопку в форме восстановления пароля.
-    def test_login_from_forgotten_form_logged_on(self, driver, url, registered_user):
+    def test_login_from_forgotten_form_logged_on(self, driver, registered_user):
         # по ссылкам переходим по страницам: главная > логин > восстановление > логин
         driver.find_element(*locators.MainPage.header_profile_btn).click()
         driver.find_element(*locators.Login.forgot_pass_link).click()
@@ -67,4 +68,4 @@ class TestLogin:
             ec.element_to_be_clickable(locators.MainPage.make_an_order_btn))
 
         # проверяем, что перешли на url главной страницы
-        assert driver.current_url == url
+        assert driver.current_url == Config.BASE_URL

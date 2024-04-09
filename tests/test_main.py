@@ -1,6 +1,5 @@
 import pytest
 import locators
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.wait import WebDriverWait
 
@@ -33,9 +32,9 @@ class TestMain:
 
         # сохраняем класс элемента до и после клика по target-заголовку раздела ингредиентов
         target_element = driver.find_element(*target)
-        old_class = target_element.find_element(By.XPATH, "..").get_attribute('class')
+        old_class = target_element.find_element(*locators.Service.parent).get_attribute('class')
         target_element.click()
-        new_class = target_element.find_element(By.XPATH, "..").get_attribute('class')
+        new_class = target_element.find_element(*locators.Service.parent).get_attribute('class')
 
         # проверяем что выбранный заголовок поменял стиль
         assert (('tab_tab_type_current__2BEPc' not in old_class)

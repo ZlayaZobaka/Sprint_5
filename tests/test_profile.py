@@ -1,12 +1,13 @@
 import pytest
 import locators
+from config import Config
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.wait import WebDriverWait
 
 
 class TestProfile:
     # Работает выход по кнопке «Выйти» в личном кабинете.
-    def test_logoff_click_user_logs_out(self, driver, url, registered_user):
+    def test_logoff_click_user_logs_out(self, driver, registered_user):
         # переходим с главной страницы на форму логина
         driver.find_element(*locators.MainPage.enter_to_profile_btn).click()
 
@@ -28,4 +29,4 @@ class TestProfile:
         # ждем появление ссылки Зарегистрироваться и проверяем текущий url
         WebDriverWait(driver, 5).until(
             ec.element_to_be_clickable(locators.Login.register_link))
-        assert driver.current_url == f'{url}login'
+        assert driver.current_url == f'{Config.BASE_URL}login'

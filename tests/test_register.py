@@ -1,12 +1,13 @@
 import pytest
 import locators
+from config import Config
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.wait import WebDriverWait
 
 
 class TestRegister:
     # Успешная регистрация
-    def test_register_fill_data_user_created(self, driver, url, new_user):
+    def test_register_fill_data_user_created(self, driver, new_user):
         # по ссылкам переходим с главной страницы на форму регистрации
         driver.find_element(*locators.MainPage.header_profile_btn).click()
         driver.find_element(*locators.Login.register_link).click()
@@ -22,7 +23,7 @@ class TestRegister:
         # ждем появление ссылки Зарегистрироваться и проверяем текущий url
         WebDriverWait(driver, 5).until(
             ec.element_to_be_clickable(locators.Login.register_link))
-        assert driver.current_url == f'{url}login'
+        assert driver.current_url == f'{Config.BASE_URL}login'
 
     # Ошибка для некорректного пароля
     def test_register_short_password_show_error_msg(self, driver, new_user):
@@ -39,5 +40,4 @@ class TestRegister:
         driver.find_element(*locators.Register.register_btn).click()
 
         # проверяем, что появилась плашка с текстом Некорректный пароль
-        elements = driver.find_elements(*locators.Register.incorrect_password_msg)
-        assert len(elements) == 1
+        assert driver.find_element(*locators.Register.incorrect_password_msg).is_displayed()
